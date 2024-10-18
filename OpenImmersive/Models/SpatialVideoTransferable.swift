@@ -40,7 +40,7 @@ struct SpatialVideo: Transferable {
                     do {
                         try fileManager.copyItem(at: received.file, to: newUrl)
                     } catch {
-                        print("Could not create a temporary copy of the selected spatial video: \(error)")
+                        print("Error: could not create a temporary copy of the selected spatial video: \(error)")
                         return (.failed, newUrl)
                     }
                 }

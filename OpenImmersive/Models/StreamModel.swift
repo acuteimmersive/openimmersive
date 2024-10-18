@@ -15,6 +15,8 @@ struct StreamModel: Codable {
     var details: String
     /// URL to a media, whether local or streamed from a server (m3u8).
     var url: URL
+    /// True if the media required user permission for access
+    var isSecurityScoped: Bool
 }
 
 extension StreamModel: Identifiable {

@@ -22,7 +22,7 @@ struct SpatialVideoPicker: View {
             matching: .all(of: [.spatialMedia, .not(.images)]),
             preferredItemEncoding: .current
         ) {
-            Label("Open Local File", systemImage: "play.house.fill")
+            Label("Open from Gallery", systemImage: "photo.on.rectangle.angled.fill")
         }
         .photosPickerDisabledCapabilities([.search, .collectionNavigation])
         .photosPickerStyle(.presentation)
@@ -33,13 +33,14 @@ struct SpatialVideoPicker: View {
                        video.status == .ready {
                         let stream = StreamModel(
                             title: video.url.lastPathComponent,
-                            details: "Local File",
-                            url: video.url
+                            details: "From Local Gallery",
+                            url: video.url,
+                            isSecurityScoped: false
                         )
                         urlSelectedAction(stream)
                     }
                 } catch {
-                    print("Could not load SpatialVideo Transferable: \(error)")
+                    print("Error: could not load SpatialVideo Transferable: \(error)")
                 }
             }
         }

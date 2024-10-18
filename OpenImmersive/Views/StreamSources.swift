@@ -19,6 +19,10 @@ struct StreamSources: View {
                 playVideo(stream)
             }
             
+            FilePicker() { stream in
+                playVideo(stream)
+            }
+            
             Button("Play Sample Stream", systemImage: "play.rectangle.fill") {
                 let stream = StreamModel.sampleStream
                 playVideo(stream)

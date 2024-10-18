@@ -33,7 +33,6 @@ struct MainMenu: View {
                 .padding()
                 .contentShape(.rect)
                 .onTapGesture {
-                    print("on tap gesture!")
                     isTooltipShowing.toggle()
                 }
                 .popover(isPresented: $isTooltipShowing) {

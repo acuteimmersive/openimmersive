@@ -51,7 +51,7 @@ class HeadTracker {
                 state = .running
                 subscription = content.subscribe(to: SceneEvents.Update.self, handler)
             } catch {
-                print("Error starting ARKit session: \(error)")
+                print("Error: could not start ARKit session: \(error)")
                 state = .stopped
             }
         }

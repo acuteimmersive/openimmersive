@@ -100,7 +100,8 @@ struct StreamUrlInput: View {
         let stream = StreamModel(
             title: "Pasted Stream",
             details: url.absoluteString,
-            url: url
+            url: url,
+            isSecurityScoped: false
         )
         
         urlSelectedAction(stream)
