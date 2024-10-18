@@ -29,6 +29,8 @@ OpenImmersive aims to provide this community with a more complete player, with p
 - Select the build target (visionOS Simulator or Apple Vision Pro)
 - Run (⌘R)
 
+Or install the latest version by [joining the TestFlight beta](https://testflight.apple.com/join/NGdsFFdB).
+
 ## Contributions
 While this project aims to remain relatively concise and lightweight to allow for modifiability, it needs a few more basic features and better error handling. Contributions are greatly appreciated!
 
