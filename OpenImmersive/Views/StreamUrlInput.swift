@@ -19,7 +19,7 @@ struct StreamUrlInput: View {
     @State private var isUrlValid: Bool = false
     
     /// The callback to execute after a valid stream URL has been submitted.
-    var urlSelectedAction: (StreamModel) -> Void
+    var loadStreamAction: (StreamModel) -> Void
     
     var body: some View {
         Button("Enter Stream URL", systemImage: "link.circle.fill") {
@@ -104,7 +104,7 @@ struct StreamUrlInput: View {
             isSecurityScoped: false
         )
         
-        urlSelectedAction(stream)
+        loadStreamAction(stream)
     }
 }
 

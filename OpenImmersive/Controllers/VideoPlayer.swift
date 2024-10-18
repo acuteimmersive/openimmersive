@@ -23,6 +23,8 @@ class VideoPlayer: Sendable {
     private(set) var duration: Double = 0
     /// `true` if playback is currently paused, or if playback has completed.
     private(set) var paused: Bool = false
+    /// `true` if playback is temporarily interrupted due to buffering.
+    private(set) var buffering: Bool = false
     /// `true` if playback reached the end of the video and is no longer playing.
     private(set) var hasReachedEnd: Bool = false
     /// The bitrate of the current video stream (0 if none).
@@ -76,13 +78,15 @@ class VideoPlayer: Sendable {
     
     //MARK: Private variables
     private var timeObserver: Any?
-    private var durationObserver: Any?
+    private var durationObserver: NSKeyValueObservation?
+    private var bufferingObserver: NSKeyValueObservation?
     private var dismissControlPanelTask: Task<Void, Never>?
     
     //MARK: Immutable variables
     /// The video player
     let player = AVPlayer()
     
+    //MARK: Public methods
     /// Instruct the UI to reveal the control panel.
     func showControlPanel() {
         withAnimation {
@@ -218,11 +222,27 @@ class VideoPlayer: Sendable {
             durationObserver = currentItem.observe(
                 \.duration,
                  options: [.new, .initial]
-            ) { [weak self] item, change in
+            ) { [weak self] item, _ in
                 let duration = CMTimeGetSeconds(item.duration)
                 if !duration.isNaN {
                     Task { @MainActor in
                         self?.duration = duration
+                    }
+                }
+            }
+        }
+        
+        if bufferingObserver == nil {
+            bufferingObserver = player.observe(
+                \.timeControlStatus,
+                 options: [.new, .old, .initial]
+            ) { [weak self] player, status in
+                Task { @MainActor in
+                    self?.buffering = player.timeControlStatus == .waitingToPlayAtSpecifiedRate
+                    // buffering doesn't bring up the control panel but prevents auto dismiss.
+                    // auto dismiss after play resumed.
+                    if (status.oldValue, status.newValue) == (.waitingToPlayAtSpecifiedRate, .playing) {
+                        self?.restartControlPanelTask()
                     }
                 }
             }
@@ -242,10 +262,10 @@ class VideoPlayer: Sendable {
             player.removeTimeObserver(timeObserver)
         }
         timeObserver = nil
-        if let durationObserver = durationObserver as? NSKeyValueObservation {
-            durationObserver.invalidate()
-        }
+        durationObserver?.invalidate()
         durationObserver = nil
+        bufferingObserver?.invalidate()
+        bufferingObserver = nil
         
         NotificationCenter.default.removeObserver(
             self,
@@ -259,7 +279,7 @@ class VideoPlayer: Sendable {
         cancelControlPanelTask()
         dismissControlPanelTask = Task {
             try? await Task.sleep(for: .seconds(10))
-            let videoIsPlaying = !paused && !hasReachedEnd
+            let videoIsPlaying = !paused && !hasReachedEnd && !buffering
             if !Task.isCancelled, videoIsPlaying {
                 hideControlPanel()
             }

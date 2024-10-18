@@ -13,7 +13,7 @@ struct FilePicker: View {
     @State private var isFileImporterShowing = false
     
     /// The callback to execute after a file has been picked.
-    var urlSelectedAction: (StreamModel) -> Void
+    var loadStreamAction: (StreamModel) -> Void
     
     var body: some View {
         Button("Open from Files", systemImage: "folder.fill") {
@@ -31,7 +31,7 @@ struct FilePicker: View {
                     url: url,
                     isSecurityScoped: url.startAccessingSecurityScopedResource()
                 )
-                urlSelectedAction(stream)
+                loadStreamAction(stream)
                 break
                 
             case .failure(let error):

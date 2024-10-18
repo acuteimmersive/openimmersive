@@ -43,19 +43,35 @@ struct ImmersivePlayer: View {
             if let controlPanel = attachments.entity(for: "ControlPanel") {
                 controlPanel.name = "ControlPanel"
                 controlPanel.position = [0, -0.5, -0.7]
-                videoScreen.children.append(controlPanel)
+                let tilt: Float = -12.0 // degrees
+                controlPanel.orientation = simd_quatf(angle: tilt * .pi/180, axis: [1, 0, 0])
                 root.addChild(controlPanel)
+            }
+            
+            // Show a spinny animation when the video is buffering
+            if let progressView = attachments.entity(for: "ProgressView") {
+                progressView.name = "ProgressView"
+                progressView.position = [0, 0, -0.7]
+                root.addChild(progressView)
             }
             
             // Setup an invisible object that will catch all taps behind the control panel
             let tapCatcher = makeTapCatcher()
             root.addChild(tapCatcher)
         } update: { content, attachments in
-            // do nothing
+            if let progressView = attachments.entity(for: "ProgressView") {
+                progressView.isEnabled = videoPlayer.buffering
+            }
+        } placeholder: {
+            ProgressView()
         } attachments: {
             Attachment(id: "ControlPanel") {
                 ControlPanel(videoPlayer: $videoPlayer)
                     .animation(.easeInOut(duration: 0.3), value: videoPlayer.shouldShowControlPanel)
+            }
+            
+            Attachment(id: "ProgressView") {
+                ProgressView()
             }
         }
         .onAppear {

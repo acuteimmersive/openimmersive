@@ -14,7 +14,7 @@ struct SpatialVideoPicker: View {
     @State private var selectedItem: PhotosPickerItem?
     
     /// The callback to execute after a valid spatial video has been picked.
-    var urlSelectedAction: (StreamModel) -> Void
+    var loadStreamAction: (StreamModel) -> Void
     
     var body: some View {
         PhotosPicker(
@@ -37,7 +37,7 @@ struct SpatialVideoPicker: View {
                             url: video.url,
                             isSecurityScoped: false
                         )
-                        urlSelectedAction(stream)
+                        loadStreamAction(stream)
                     }
                 } catch {
                     print("Error: could not load SpatialVideo Transferable: \(error)")
