@@ -9,22 +9,28 @@ import SwiftUI
 import RealityKit
 
 /// A simple horizontal view presenting the user with video playback controls.
-struct ControlPanel: View {
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-    
+public struct ControlPanel: View {
     /// The singleton video player control interface.
     @Binding var videoPlayer: VideoPlayer
     
-    var body: some View {
+    /// The callback to execute when the user closes the immersive player.
+    let closeAction: (() -> Void)?
+    
+    /// Public initializer for visibility.
+    /// - Parameters:
+    ///   - videoPlayer: the singleton video player control interface.
+    ///   - closeAction: the optional callback to execute when the user closes the immersive player.
+    public init(videoPlayer: Binding<VideoPlayer>, closeAction: (() -> Void)? = nil) {
+        self._videoPlayer = videoPlayer
+        self.closeAction = closeAction
+    }
+    
+    public var body: some View {
         if videoPlayer.shouldShowControlPanel {
             VStack {
                 HStack {
                     Button("", systemImage: "chevron.backward") {
-                        Task {
-                            openWindow(id: "MainWindow")
-                            await dismissImmersiveSpace()
-                        }
+                        closeAction?()
                     }
                     .controlSize(.extraLarge)
                     .tint(.clear)

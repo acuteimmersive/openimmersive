@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// A button revealing a sheet with a `TextField` and a clipboard paste button for manual input of stream URLs.
-struct StreamUrlInput: View {
+public struct StreamUrlInput: View {
     /// The visibility of the sheet.
     @State private var isSheetShowing: Bool = false
     /// The current value of the text field.
@@ -21,7 +21,14 @@ struct StreamUrlInput: View {
     /// The callback to execute after a valid stream URL has been submitted.
     var loadStreamAction: (StreamModel) -> Void
     
-    var body: some View {
+    /// Public initializer for visibility.
+    /// - Parameters:
+    ///   - loadStreamAction: the callback to execute after a file has been picked.
+    public init(loadStreamAction: @escaping (StreamModel) -> Void) {
+        self.loadStreamAction = loadStreamAction
+    }
+    
+    public var body: some View {
         Button("Enter Stream URL", systemImage: "link.circle.fill") {
             isSheetShowing.toggle()
         }

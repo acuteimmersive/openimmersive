@@ -8,7 +8,7 @@
 import RealityKit
 
 @MainActor @preconcurrency
-struct VideoTools {
+public struct VideoTools {
     /// Generates a sphere mesh suitable for mapping an equirectangular video source.
     /// - Parameters:
     ///   - radius: The radius of the sphere.
@@ -19,7 +19,7 @@ struct VideoTools {
     ///   - verticalSlices: The number of divisions around the sphere.
     ///   - horizontalSlices: The number of divisions from top to bottom.
     /// - Returns: A MeshResource representing the sphere.
-    static func generateVideoSphere(
+    public static func generateVideoSphere(
         radius: Float,
         sourceHorizontalFov: Float,
         sourceVerticalFov: Float,
@@ -112,7 +112,7 @@ struct VideoTools {
     
     /// Makes a projection `MeshResource` for a 180 degree video.
     /// - Returns: A tuple containing the `MeshResource` and `Transform` for the video.
-    static func makeVideoMesh() async -> (mesh: MeshResource, transform: Transform) {
+    public static func makeVideoMesh() async -> (mesh: MeshResource, transform: Transform) {
         let mesh = VideoTools.generateVideoSphere(
             radius: 10000.0,
             sourceHorizontalFov: 180.0,

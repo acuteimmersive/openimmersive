@@ -13,7 +13,7 @@ import AVFoundation
 // which is critical for using them in SwiftUI Views
 @MainActor
 @Observable
-class VideoPlayer: Sendable {
+public class VideoPlayer: Sendable {
     //MARK: Variables accessible to the UI
     /// The title of the current video (empty string if none).
     private(set) var title: String = ""
@@ -41,8 +41,8 @@ class VideoPlayer: Sendable {
     /// The current time in seconds of the current video (0 if none).
     ///
     /// This variable is updated by video playback but can be overwritten by a scrubber, in conjunction with `scrubState`.
-    var currentTime: Double = 0
-    enum ScrubState {
+    public var currentTime: Double = 0
+    public enum ScrubState {
         /// The scrubber is not active and reflects the video's current playback time.
         case notScrubbing
         /// The scrubber is active and the user is actively dragging it.
@@ -51,7 +51,7 @@ class VideoPlayer: Sendable {
         case scrubEnded
     }
     /// The current state of the scrubber.
-    var scrubState: ScrubState = .notScrubbing {
+    public var scrubState: ScrubState = .notScrubbing {
        didSet {
           switch scrubState {
           case .notScrubbing:
@@ -84,25 +84,43 @@ class VideoPlayer: Sendable {
     
     //MARK: Immutable variables
     /// The video player
-    let player = AVPlayer()
+    public let player = AVPlayer()
     
     //MARK: Public methods
+    /// Public initializer for visibility.
+    public init(title: String = "", details: String = "", duration: Double = 0, paused: Bool = false, buffering: Bool = false, hasReachedEnd: Bool = false, bitrate: Double = 0, shouldShowControlPanel: Bool = true, currentTime: Double = 0, scrubState: VideoPlayer.ScrubState = .notScrubbing, timeObserver: Any? = nil, durationObserver: NSKeyValueObservation? = nil, bufferingObserver: NSKeyValueObservation? = nil, dismissControlPanelTask: Task<Void, Never>? = nil) {
+        self.title = title
+        self.details = details
+        self.duration = duration
+        self.paused = paused
+        self.buffering = buffering
+        self.hasReachedEnd = hasReachedEnd
+        self.bitrate = bitrate
+        self.shouldShowControlPanel = shouldShowControlPanel
+        self.currentTime = currentTime
+        self.scrubState = scrubState
+        self.timeObserver = timeObserver
+        self.durationObserver = durationObserver
+        self.bufferingObserver = bufferingObserver
+        self.dismissControlPanelTask = dismissControlPanelTask
+    }
+    
     /// Instruct the UI to reveal the control panel.
-    func showControlPanel() {
+    public func showControlPanel() {
         withAnimation {
             shouldShowControlPanel = true
         }
     }
     
     /// Instruct the UI to hide the control panel.
-    func hideControlPanel() {
+    public func hideControlPanel() {
         withAnimation {
             shouldShowControlPanel = false
         }
     }
     
     /// Instruct the UI to toggle the visibility of the control panel.
-    func toggleControlPanel() {
+    public func toggleControlPanel() {
         withAnimation {
             shouldShowControlPanel.toggle()
         }
@@ -111,7 +129,7 @@ class VideoPlayer: Sendable {
     /// Load the indicated stream (will stop playback).
     /// - Parameters:
     ///   - stream: The model describing the stream.
-    func openStream(_ stream: StreamModel) {
+    public func openStream(_ stream: StreamModel) {
         // Clean up the AVPlayer first, avoid bad states
         stop()
         
@@ -128,7 +146,7 @@ class VideoPlayer: Sendable {
     /// Play or unpause media playback.
     ///
     /// If playback has reached the end of the video (`hasReachedEnd` is true), play from the beginning.
-    func play() {
+    public func play() {
         if hasReachedEnd {
             player.seek(to: CMTime.zero)
         }
@@ -139,14 +157,14 @@ class VideoPlayer: Sendable {
     }
     
     /// Pause media playback.
-    func pause() {
+    public func pause() {
         player.pause()
         paused = true
         restartControlPanelTask()
     }
     
     /// Jump back 15 seconds in media playback.
-    func minus15() {
+    public func minus15() {
         guard let time = player.currentItem?.currentTime() else {
             return
         }
@@ -157,7 +175,7 @@ class VideoPlayer: Sendable {
     }
     
     /// Jump forward 15 seconds in media playback.
-    func plus15() {
+    public func plus15() {
         guard let time = player.currentItem?.currentTime() else {
             return
         }
@@ -168,7 +186,7 @@ class VideoPlayer: Sendable {
     }
     
     /// Stop media playback and unload the current media.
-    func stop() {
+    public func stop() {
         tearDownObservers()
         player.replaceCurrentItem(with: nil)
         title = ""

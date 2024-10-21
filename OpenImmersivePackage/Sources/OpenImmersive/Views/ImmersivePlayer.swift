@@ -10,19 +10,31 @@ import RealityKit
 import AVFoundation
 
 /// An immersive video player, complete with UI controls
-struct ImmersivePlayer: View {
+public struct ImmersivePlayer: View {
     /// The singleton video player control interface.
-    @Binding var videoPlayer: VideoPlayer
+    @State var videoPlayer: VideoPlayer = VideoPlayer()
     
     /// The stream for which the player was open.
     ///
     /// The current implementation assumes only one media per appearance of the ImmersivePlayer.
     let selectedStream: StreamModel
     
+    /// The callback to execute when the user closes the immersive player.
+    let closeAction: (() -> Void)?
+    
     /// The pose tracker ensuring the position of the control panel attachment is fixed relatively to the viewer.
     private let headTracker = HeadTracker()
     
-    var body: some View {
+    /// Public initializer for visibility.
+    /// - Parameters:
+    ///   - selectedStream: the stream for which the player will be open.
+    ///   - closeAction: the callback to execute when the user closes the immersive player.
+    public init(selectedStream: StreamModel, closeAction: (() -> Void)? = nil) {
+        self.selectedStream = selectedStream
+        self.closeAction = closeAction
+    }
+    
+    public var body: some View {
         RealityView { content, attachments in
             // Setup root entity that will remain static relatively to the head
             let root = makeRootEntity()
@@ -66,7 +78,7 @@ struct ImmersivePlayer: View {
             ProgressView()
         } attachments: {
             Attachment(id: "ControlPanel") {
-                ControlPanel(videoPlayer: $videoPlayer)
+                ControlPanel(videoPlayer: $videoPlayer, closeAction: closeAction)
                     .animation(.easeInOut(duration: 0.3), value: videoPlayer.shouldShowControlPanel)
             }
             

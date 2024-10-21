@@ -1,16 +1,17 @@
 //
 //  OpenImmersiveApp.swift
-//  OpenImmersive
+//  OpenImmersiveApp
 //
 //  Created by Anthony Maës (Acute Immersive) on 9/20/24.
 //
 
 import SwiftUI
+import OpenImmersive
 
 @main
 struct OpenImmersiveApp: App {
-    /// The singleton video player control interface, passed down to the application's views.
-    @State private var videoPlayer = VideoPlayer()
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     
     var body: some Scene {
         WindowGroup(id: "MainWindow") {
@@ -19,7 +20,12 @@ struct OpenImmersiveApp: App {
         .defaultSize(width: 750, height: 600)
         
         ImmersiveSpace(for: StreamModel.self) { $model in
-            ImmersivePlayer(videoPlayer: $videoPlayer, selectedStream: model!)
+            ImmersivePlayer(selectedStream: model!) {
+                Task {
+                    openWindow(id: "MainWindow")
+                    await dismissImmersiveSpace()
+                }
+            }
         }
         .immersionStyle(selection: .constant(.full), in: .full)
     }

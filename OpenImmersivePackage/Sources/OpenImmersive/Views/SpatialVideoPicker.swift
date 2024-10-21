@@ -9,14 +9,21 @@ import SwiftUI
 import PhotosUI
 
 /// A button revealing a `PhotosPicker` configured to only show spatial videos.
-struct SpatialVideoPicker: View {
+public struct SpatialVideoPicker: View {
     /// The currently selected item, if any.
     @State private var selectedItem: PhotosPickerItem?
     
     /// The callback to execute after a valid spatial video has been picked.
     var loadStreamAction: (StreamModel) -> Void
     
-    var body: some View {
+    /// Public initializer for visibility.
+    /// - Parameters:
+    ///   - loadStreamAction: the callback to execute after a file has been picked. 
+    public init(loadStreamAction: @escaping (StreamModel) -> Void) {
+        self.loadStreamAction = loadStreamAction
+    }
+    
+    public var body: some View {
         PhotosPicker(
             selection: $selectedItem,
             matching: .all(of: [.spatialMedia, .not(.images)]),

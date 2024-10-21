@@ -1,12 +1,13 @@
 //
 //  StreamSources.swift
-//  OpenImmersive
+//  OpenImmersiveApp
 //
 //  Created by Anthony Maës (Acute Immersive) on 9/20/24.
 //
 
 import SwiftUI
 import RealityKit
+import OpenImmersive
 
 /// A list of available video stream sources.
 struct StreamSources: View {
@@ -48,6 +49,16 @@ struct StreamSources: View {
             }
         }
     }
+}
+
+extension StreamModel {
+    /// An example StreamModel to illustrate how to load videos that stream from the web.
+    @MainActor public static let sampleStream = StreamModel(
+        title: "Example Stream",
+        details: "Local basketball player takes a shot at sunset",
+        url: URL(string: "https://stream.spatialgen.com/stream/JNVc-sA-_QxdOQNnzlZTc/index.m3u8")!,
+        isSecurityScoped: false
+    )
 }
 
 #Preview(windowStyle: .automatic) {

@@ -11,8 +11,8 @@ import SwiftUI
 
 /// Provides a convenience interface to obtain head pose transforms and subscribing a closure to handle pose update events.
 @MainActor
-class HeadTracker {
-    enum State {
+public class HeadTracker {
+    public enum State {
         /// Head tracking is stopped.
         case stopped
         /// Head tracking is starting, the underlying `ARKitSession` is starting.
@@ -25,7 +25,7 @@ class HeadTracker {
     private(set) var state: State = .stopped
     
     /// The transform of the current pose of the head. This value is `nil` when `state` is not `.running`
-    var transform: simd_float4x4? {
+    public var transform: simd_float4x4? {
         get {
             guard state == .running,
                   let deviceAnchor = worldTracking.queryDeviceAnchor(atTimestamp: CACurrentMediaTime())
@@ -42,7 +42,7 @@ class HeadTracker {
     /// - Parameters:
     ///   - content: The `RealityViewContent` provided by the `RealityView`'s `body` closure.
     ///   - handler: A closure that runs when the head pose update occurs.
-    func start(content: RealityViewContent, _ handler: @escaping (SceneEvents.Update) -> Void) {
+    public func start(content: RealityViewContent, _ handler: @escaping (SceneEvents.Update) -> Void) {
         guard state == .stopped else { return }
         state = .starting
         Task {
@@ -58,7 +58,7 @@ class HeadTracker {
     }
     
     /// Stops head tracking, the underlying `ARKitSession` and unsubscribes from pose update events.
-    func stop() {
+    public func stop() {
         guard state == .running else { return }
         state = .stopped
         session.stop()

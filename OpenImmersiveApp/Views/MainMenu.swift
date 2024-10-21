@@ -1,11 +1,12 @@
 //
 //  MainMenu.swift
-//  OpenImmersive
+//  OpenImmersiveApp
 //
 //  Created by Anthony Maës on 10/16/24.
 //
 
 import SwiftUI
+import OpenImmersive
 
 /// A simple window menu welcoming users to the app.
 struct MainMenu: View {
