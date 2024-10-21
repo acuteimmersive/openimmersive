@@ -10,13 +10,13 @@ import Foundation
 /// Simple structure describing a video stream.
 public struct StreamModel: Codable {
     /// The title of the video stream.
-    var title: String
+    public var title: String
     /// A short description of the video stream.
-    var details: String
+    public var details: String
     /// URL to a media, whether local or streamed from a server (m3u8).
-    var url: URL
+    public var url: URL
     /// True if the media required user permission for access.
-    var isSecurityScoped: Bool
+    public var isSecurityScoped: Bool
     
     /// Public initializer for visibility.
     /// - Parameters:
@@ -24,7 +24,7 @@ public struct StreamModel: Codable {
     ///   - details: a short description of the video stream.
     ///   - url: URL to a media, whether local or streamed from a server (m3u8).
     ///   - isSecurityScoped: true if the media required user permission for access.
-    public init(title: String, details: String, url: URL, isSecurityScoped: Bool) {
+    public init(title: String, details: String, url: URL, isSecurityScoped: Bool = false) {
         self.title = title
         self.details = details
         self.url = url
