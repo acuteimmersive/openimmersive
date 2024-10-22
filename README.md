@@ -14,7 +14,7 @@ Because of significant interest in filmmakers for Immersive Video, many develope
 OpenImmersive aims to provide this community with a more complete player, with playback controls, error handling, media loading from streaming and from the local photo gallery. The project and code are intentionally kept as concise as possible to find the right balance between turnkey readiness and modifiability.
 
 ## Features
-* The xcode project contains two targets: **OpenImmersiveLib**, an easy-to-integrate Swift package that contains the essential controllers, views and models; and **OpenImmersiveApp**, the visionOS app proper.
+* The xcode project contains **OpenImmersiveApp**, the visionOS app, which depends on **OpenImmersiveLib**, an easy-to-integrate Swift package that lives on its own github repository: [https://github.com/acuteimmersive/openimmersivelib](https://github.com/acuteimmersive/openimmersivelib)
 * **Only MV-HEVC 180-degree video files and streams are supported.** Other formats will not display correctly without code modifications.
 * Load a video from various sources: photo gallery, local files/documents, streaming playlist URL.
 * Control playback with Play/Pause buttons, +15/-15 second buttons, and an interactable scrubber in an auto-dismiss control panel.
@@ -31,6 +31,12 @@ OpenImmersive aims to provide this community with a more complete player, with p
 - Run (⌘R)
 
 Or install the latest version by [joining the TestFlight beta](https://testflight.apple.com/join/NGdsFFdB).
+
+## Integrate OpenImmersive in your project
+- Open your visionOS app in xcode.
+- Go to File > Add Package Dependencies...
+- Copy-paste the repo URL `github.com/acuteimmersive/openimmersivelib` in the search bar at the top right of the popup.
+- Click Add Package, and use `import OpenImmersive` to use the lib's classes and structs in your app.
 
 ## Contributions
 While this project aims to remain relatively concise and lightweight to allow for modifiability, it needs a few more basic features and better error handling. Contributions are greatly appreciated!

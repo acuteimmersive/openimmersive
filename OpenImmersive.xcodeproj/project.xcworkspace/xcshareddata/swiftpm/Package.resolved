@@ -1,0 +1,15 @@
+{
+  "originHash" : "fe74f9e4a3a9ec6fb219308da547a36fe828e569d18c51bf7f7cfe76ef58ba07",
+  "pins" : [
+    {
+      "identity" : "openimmersivelib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/acuteimmersive/openimmersivelib",
+      "state" : {
+        "revision" : "607d2dbb3ca719ff955c1754d1288447f9187d89",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
