@@ -1,9 +1,9 @@
 # OpenImmersive
-![OpenImmersive logo, representing a pair of red/blue anaglyphic glasses](https://raw.githubusercontent.com/acuteimmersive/openimmersive/refs/heads/main/OpenImmersive/Media/openimmersive-logo.png)
+![OpenImmersive logo, representing a pair of red/blue anaglyphic glasses](https://acuteimmersive.com/assets/images/image05.png)
 
 _A free and open source immersive video player (3D VR180) for the Apple Vision Pro._
 
-By [Anthony Maës](https://www.linkedin.com/in/portemantho/) ([Acute Immersive](https://acuteimmersive.com/)), derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer/) by [Mike Swanson](https://blog.mikeswanson.com/).
+By [Anthony Maës](https://www.linkedin.com/in/portemantho/) ([Acute Immersive](https://acuteimmersive.com/)), derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer/) by [Mike Swanson](https://blog.mikeswanson.com/). See the [announcement on Medium](https://medium.com/@portemantho/openimmersive-the-free-and-open-source-immersive-video-player-a37f69556d16)!
 
 The Apple Vision Pro introduced two types of stereoscopic videos: 
 - *Spatial Video*, rectangular and user-created, is supported natively by the Photos App and the rest of the ecosystem.
@@ -30,7 +30,7 @@ OpenImmersive aims to provide this community with a more complete player, with p
 - Select the build target (visionOS Simulator or Apple Vision Pro)
 - Run (⌘R)
 
-Or install the latest version by [joining the TestFlight beta](https://testflight.apple.com/join/NGdsFFdB).
+Or install the app from the [visionOS AppStore](https://apps.apple.com/us/app/openimmersive/id6737087083) or install the latest development version by [joining the TestFlight beta](https://testflight.apple.com/join/NGdsFFdB).
 
 ## Integrate OpenImmersive in your project
 - Open your visionOS app in xcode.
