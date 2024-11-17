@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealityKit
 import OpenImmersive
 
 /// A list of available video stream sources.

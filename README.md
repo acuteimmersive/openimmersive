@@ -18,6 +18,7 @@ OpenImmersive aims to provide this community with a more complete player, with p
 * **Only MV-HEVC 180-degree video files and streams are supported.** Other formats will not display correctly without code modifications.
 * Load a video from various sources: photo gallery, local files/documents, streaming playlist URL.
 * Control playback with Play/Pause buttons, +15/-15 second buttons, and an interactable scrubber in an auto-dismiss control panel.
+* Select resolution/bandwidth when streaming videos.
 
 ## Requirements
 * macOS with Xcode 16 or later
@@ -43,6 +44,5 @@ While this project aims to remain relatively concise and lightweight to allow fo
 
 Desired improvements:
 - Subtitles support
-- Bitrate/resolution selection
 - Wrong video format detection
 - Media drag & drop support

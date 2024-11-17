@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A2AB81542CC727F80090A53A /* OpenImmersiveLib in Frameworks */ = {isa = PBXBuildFile; productRef = A2AB81532CC727F80090A53A /* OpenImmersiveLib */; };
+		A28F52692CE9A12300D39FF3 /* OpenImmersiveLib in Frameworks */ = {isa = PBXBuildFile; productRef = A28F52682CE9A12300D39FF3 /* OpenImmersiveLib */; };
+		A28F526C2CE9A1C900D39FF3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A28F526B2CE9A1C900D39FF3 /* README.md */; };
+		A28F526D2CE9A1C900D39FF3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A28F526A2CE9A1C900D39FF3 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A28F526A2CE9A1C900D39FF3 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		A28F526B2CE9A1C900D39FF3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A2BF9A612C9DEBCD000975F2 /* OpenImmersiveApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenImmersiveApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -40,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2AB81542CC727F80090A53A /* OpenImmersiveLib in Frameworks */,
+				A28F52692CE9A12300D39FF3 /* OpenImmersiveLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +61,8 @@
 		A2BF9A582C9DEBCD000975F2 = {
 			isa = PBXGroup;
 			children = (
+				A28F526A2CE9A1C900D39FF3 /* LICENSE */,
+				A28F526B2CE9A1C900D39FF3 /* README.md */,
 				A2BF9A632C9DEBCD000975F2 /* OpenImmersiveApp */,
 				A2712A482CC6FAB100EA709B /* Frameworks */,
 				A2BF9A622C9DEBCD000975F2 /* Products */,
@@ -91,7 +97,7 @@
 			);
 			name = OpenImmersiveApp;
 			packageProductDependencies = (
-				A2AB81532CC727F80090A53A /* OpenImmersiveLib */,
+				A28F52682CE9A12300D39FF3 /* OpenImmersiveLib */,
 			);
 			productName = Acute;
 			productReference = A2BF9A612C9DEBCD000975F2 /* OpenImmersiveApp.app */;
@@ -122,7 +128,7 @@
 			mainGroup = A2BF9A582C9DEBCD000975F2;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A2AB81522CC727F80090A53A /* XCRemoteSwiftPackageReference "openimmersivelib" */,
+				A28F52672CE9A12300D39FF3 /* XCRemoteSwiftPackageReference "openimmersivelib" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A2BF9A622C9DEBCD000975F2 /* Products */;
@@ -139,6 +145,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A28F526C2CE9A1C900D39FF3 /* README.md in Resources */,
+				A28F526D2CE9A1C900D39FF3 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,7 +169,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.4;
+				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = N45YRSUT74;
 				ENABLE_PREVIEWS = YES;
@@ -173,7 +181,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acuteimmersive.openimmersive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -189,7 +197,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.4;
+				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = N45YRSUT74;
 				ENABLE_PREVIEWS = YES;
@@ -201,7 +209,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acuteimmersive.openimmersive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -354,20 +362,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A2AB81522CC727F80090A53A /* XCRemoteSwiftPackageReference "openimmersivelib" */ = {
+		A28F52672CE9A12300D39FF3 /* XCRemoteSwiftPackageReference "openimmersivelib" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/acuteimmersive/openimmersivelib";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A2AB81532CC727F80090A53A /* OpenImmersiveLib */ = {
+		A28F52682CE9A12300D39FF3 /* OpenImmersiveLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A2AB81522CC727F80090A53A /* XCRemoteSwiftPackageReference "openimmersivelib" */;
+			package = A28F52672CE9A12300D39FF3 /* XCRemoteSwiftPackageReference "openimmersivelib" */;
 			productName = OpenImmersiveLib;
 		};
 /* End XCSwiftPackageProductDependency section */

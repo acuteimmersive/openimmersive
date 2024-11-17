@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import OpenImmersive
 
 /// A simple window menu welcoming users to the app.
 struct MainMenu: View {
