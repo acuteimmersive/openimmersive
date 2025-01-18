@@ -1,7 +1,7 @@
 # OpenImmersive
-![OpenImmersive logo, representing a pair of red/blue anaglyphic glasses](https://acuteimmersive.com/assets/images/image05.png)
+![OpenImmersive logo, representing a pair of red/blue anaglyphic glasses](OpenImmersiveApp/Media/openimmersive-logo.png)
 
-_A free and open source immersive video player (3D VR180) for the Apple Vision Pro._
+_A free and open source MV-HEVC immersive video player (3D VR180) for the Apple Vision Pro._
 
 By [Anthony Maës](https://www.linkedin.com/in/portemantho/) ([Acute Immersive](https://acuteimmersive.com/)), derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer/) by [Mike Swanson](https://blog.mikeswanson.com/). See the [announcement on Medium](https://medium.com/@portemantho/openimmersive-the-free-and-open-source-immersive-video-player-a37f69556d16)!
 
@@ -15,7 +15,7 @@ OpenImmersive aims to provide this community with a more complete player, with p
 
 ## Features
 * The xcode project contains **OpenImmersiveApp**, the visionOS app, which depends on **OpenImmersiveLib**, an easy-to-integrate Swift package that lives on its own github repository: [https://github.com/acuteimmersive/openimmersivelib](https://github.com/acuteimmersive/openimmersivelib)
-* **Only MV-HEVC 180-degree video files and streams are supported.** Other formats will not display correctly without code modifications.
+* **This player only supports immersive and spatial videos in the MV-HEVC format.** Other formats will not display correctly without code modifications.
 * Load a video from various sources: photo gallery, local files/documents, streaming playlist URL.
 * Control playback with Play/Pause buttons, +15/-15 second buttons, and an interactable scrubber in an auto-dismiss control panel.
 * Select resolution/bandwidth when streaming videos.
@@ -44,5 +44,5 @@ While this project aims to remain relatively concise and lightweight to allow fo
 
 Desired improvements:
 - Subtitles support
-- Wrong video format detection
+- Online stream format detection
 - Media drag & drop support
