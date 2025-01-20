@@ -14,42 +14,63 @@ struct StreamSources: View {
     @Environment(\.dismissWindow) private var dismissWindow
     /// The default field of view in case it cannot be extracted from the video asset.
     @State private var fallbackFov: Int = 180
+    /// Whether to use the fallback field of view as forced value.
+    @State private var forceFov: Bool = false
+    /// The visibility of a panel with advanced format options
+    @State private var areOptionsShowing: Bool = false
     /// The visibility of a tooltip with more information about MV-HEVC encoding.
-    @State var isTooltipShowing: Bool = false
+    @State private var isTooltipShowing: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
             Button("Play Sample Stream", systemImage: "play.rectangle.fill") {
-                let stream = StreamModel.sampleStream
+                var stream = applyFormat(to: StreamModel.sampleStream)
+                // lock the fallback to 180 but let users override to illustrate functionality
+                stream.fallbackFieldOfView = 180.0
                 playVideo(stream)
             }
             
             Divider()
+                .padding(.vertical, areOptionsShowing ? 0 : 40)
             
-            SpatialVideoPicker() { stream in
-                var stream = stream
-                // Override the fallback field of view with the user-specified value
-                stream.fallbackFieldOfView = Float(fallbackFov)
-                playVideo(stream)
+            HStack {
+                SpatialVideoPicker() { stream in
+                    playVideo(applyFormat(to: stream))
+                }
+                
+                FilePicker() { stream in
+                    playVideo(applyFormat(to: stream))
+                }
+                
+                StreamUrlInput() { stream in
+                    playVideo(applyFormat(to: stream))
+                }
+                
+                Toggle(isOn: $areOptionsShowing.animation(.interactiveSpring)) {
+                    Image(systemName: "gearshape.fill")
+                }
+                .toggleStyle(.button)
             }
             
-            FilePicker() { stream in
-                var stream = stream
-                // Override the fallback field of view with the user-specified value
-                stream.fallbackFieldOfView = Float(fallbackFov)
-                playVideo(stream)
+            if areOptionsShowing {
+                VStack {
+                    Text("Video format is automatically detected when possible, otherwise the player will fall back to the following value:")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.bottom)
+                    
+                    FormatPicker(fieldOfView: $fallbackFov, options: [65, 144, 180, 360])
+                    
+                    Toggle(isOn: $forceFov.animation(.easeInOut)) {
+                        Text("Override detected format")
+                    }
+                    .fixedSize()
+                }
+                .padding(.horizontal, 40)
+                .padding(.vertical)
+                .glassBackgroundEffect()
+                .padding(.horizontal, 40)
+                .transition(.scale)
             }
-            
-            StreamUrlInput() { stream in
-                var stream = stream
-                // Override the fallback field of view with the user-specified value
-                stream.fallbackFieldOfView = Float(fallbackFov)
-                playVideo(stream)
-            }
-            
-            Text("Video format is automatically detected when available,\notherwise the player will use the following value:")
-                .fixedSize(horizontal: false, vertical: true)
-            FormatPicker(fieldOfView: $fallbackFov, options: [65, 144, 180, 360])
             
             Text("This player only supports immersive and spatial videos in the MV-HEVC format. \(Image(systemName: "info.bubble\(isTooltipShowing ? "" : ".fill")"))")
                 .font(.callout)
@@ -80,6 +101,16 @@ struct StreamSources: View {
                 dismissWindow()
             }
         }
+    }
+    
+    /// Updates the input StreamModel's fallbackFieldOfView and forceFieldOfView values according to their corresponding user options.
+    /// - Parameters:
+    ///   - stream: the model describing the stream.
+    private func applyFormat(to stream: StreamModel) -> StreamModel {
+        var stream = stream
+        stream.fallbackFieldOfView = Float(fallbackFov)
+        stream.forceFieldOfView = forceFov ? Float(fallbackFov) : nil
+        return stream
     }
 }
 

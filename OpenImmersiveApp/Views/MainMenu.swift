@@ -2,7 +2,7 @@
 //  MainMenu.swift
 //  OpenImmersiveApp
 //
-//  Created by Anthony Maës on 10/16/24.
+//  Created by Anthony Maës (Acute Immersive) on 10/16/24.
 //
 
 import SwiftUI
@@ -15,22 +15,32 @@ struct MainMenu: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 255)
-                .padding()
+                .padding(.horizontal, 40)
+                .padding(.vertical)
             
             Text("OpenImmersive")
                 .font(.largeTitle)
             
             Text("A free and open source immersive video player for the Apple Vision Pro.")
-                .font(.subheadline)
+                .font(.headline)
             
             StreamSources()
+                .padding(.top, 40)
             
-            Text("By [Anthony Maës](https://www.linkedin.com/in/portemantho/) ([Acute Immersive 🐶](https://www.acuteimmersive.com/)), derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer/) by [Mike Swanson](https://blog.mikeswanson.com/).")
+            Text("OpenImmersive \(version) \nMaintained by [Anthony Maës](https://www.linkedin.com/in/portemantho/) & [Acute Immersive 🐶](https://www.acuteimmersive.com/)\nDerived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer/) by [Mike Swanson](https://blog.mikeswanson.com/)")
                 .contentShape(.rect)
-                .padding()
+                .padding(.horizontal, 40)
+                .padding(.vertical)
+                .frame(maxWidth: .infinity, alignment: .bottomLeading)
             
         }
         .padding()
+    }
+    
+    var version: String {
+        get {
+            Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        }
     }
 }
 

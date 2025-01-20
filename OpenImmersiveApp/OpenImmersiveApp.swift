@@ -17,7 +17,7 @@ struct OpenImmersiveApp: App {
         WindowGroup(id: "MainWindow") {
             MainMenu()
         }
-        .defaultSize(width: 750, height: 750)
+        .defaultSize(width: 800, height: 800)
         
         ImmersiveSpace(for: StreamModel.self) { $model in
             ImmersivePlayer(selectedStream: model!) {
