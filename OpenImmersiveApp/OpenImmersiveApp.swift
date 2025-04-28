@@ -20,11 +20,14 @@ struct OpenImmersiveApp: App {
         .defaultSize(width: 800, height: 800)
         
         ImmersiveSpace(for: StreamModel.self) { $model in
-            ImmersivePlayer(selectedStream: model!) {
+            let closeAction: () -> Void = {
                 Task {
                     openWindow(id: "MainWindow")
                     await dismissImmersiveSpace()
                 }
+            }
+            ImmersivePlayer(selectedStream: model!) {
+                closeAction()
             }
         }
         .immersionStyle(selection: .constant(.full), in: .full)
