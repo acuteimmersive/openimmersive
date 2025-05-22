@@ -192,8 +192,7 @@ extension StreamModel {
         title: "Example Stream",
         details: "Local basketball player takes a shot at sunset",
         url: URL(string: "https://stream.spatialgen.com/stream/JNVc-sA-_QxdOQNnzlZTc/index.m3u8")!,
-        projection: .equirectangular(fieldOfView: 180.0),
-        isSecurityScoped: false
+        projection: .equirectangular(fieldOfView: 180.0)
     )
 }
 
