@@ -12,38 +12,43 @@ import OpenImmersive
 struct StreamSources: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
-    /// The default field of view in case it cannot be extracted from the video asset.
-    @State private var fallbackFov: Int = 180
-    /// Whether to use the fallback field of view as forced value.
-    @State private var forceFov: Bool = false
+    /// The selected projection type
+    @Environment(OpenImmersiveAppState.self) private var appState
+    
     /// The visibility of a panel with advanced format options
     @State private var areOptionsShowing: Bool = false
     /// The visibility of a tooltip with more information about MV-HEVC encoding.
     @State private var isTooltipShowing: Bool = false
     
     var body: some View {
-        VStack(spacing: 20) {
-            Button("Play Sample Stream", systemImage: "play.rectangle.fill") {
-                var stream = applyFormat(to: StreamModel.sampleStream)
-                // lock the fallback to 180 but let users override to illustrate functionality
-                stream.fallbackFieldOfView = 180.0
-                playVideo(stream)
+        @Bindable var appState = appState
+        VStack(spacing: 10) {
+            let selectedStream = appState.selectedStream ?? StreamModel.sampleStream
+            
+            PlayButton() {
+                playVideo(applyFormat(to: selectedStream))
             }
             
+            let videoTitle = selectedStream.title
+            let fieldOfView = appState.projection == .equirectangular ? "\(appState.fieldOfView)°" : ""
+            
+            Text("Selected video: **\(videoTitle)**")
+            Text("Projection: **\(appState.projection.rawValue) \(fieldOfView)**")
+            
             Divider()
-                .padding(.vertical, areOptionsShowing ? 0 : 40)
+                .padding(.vertical)
             
             HStack {
                 SpatialVideoPicker() { stream in
-                    playVideo(applyFormat(to: stream))
+                    appState.selectedStream = stream
                 }
                 
                 FilePicker() { stream in
-                    playVideo(applyFormat(to: stream))
+                    appState.selectedStream = stream
                 }
                 
                 StreamUrlInput() { stream in
-                    playVideo(applyFormat(to: stream))
+                    appState.selectedStream = stream
                 }
                 
                 Toggle(isOn: $areOptionsShowing.animation(.interactiveSpring)) {
@@ -51,31 +56,54 @@ struct StreamSources: View {
                 }
                 .toggleStyle(.button)
             }
-            
-            if areOptionsShowing {
+            .popover(isPresented: $areOptionsShowing) {
                 VStack {
-                    Text("Video format is automatically detected when possible, otherwise the player will fall back to the following value:")
+                    ProjectionPicker(projection: $appState.projection, options: [.equirectangular, .spatial, .appleImmersive])
+                    
+                    switch appState.projection {
+                    case .equirectangular:
+                        Text("The video will be projected onto a sphere with the following viewing angle, unless a different value is encoded in the file:")
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom)
+                        
+                        FormatPicker(fieldOfView: $appState.fieldOfView, options: [65, 144, 180, 360])
+                        
+                        Toggle(isOn: $appState.forceFov.animation(.easeInOut)) {
+                            Text("Override encoded angle")
+                        }
+                        .fixedSize()
+                    case .spatial:
+                        Text("The video will render on a rectangular plane. Use this for Spatial Video.")
                         .fixedSize(horizontal: false, vertical: true)
-                        .padding(.bottom)
+                        .multilineTextAlignment(.center)
+                    case .appleImmersive:
+                        Text("**Experimental!**\nThe video will render with the native player for Apple Immersive Videos.\nAIVU files created from half-equirectangular videos in the Apple Immersive Video Utility should use the Equirectangular projection.")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.center)
+                    }
                     
-                    FormatPicker(fieldOfView: $fallbackFov, options: [65, 144, 180, 360])
+                    Divider()
+                        .padding(.vertical, 10)
                     
-                    Toggle(isOn: $forceFov.animation(.easeInOut)) {
-                        Text("Override detected format")
+                    Toggle(isOn: $appState.showTimecodeReadout.animation(.easeInOut)) {
+                        Text("Show timecode readout")
                     }
                     .fixedSize()
                 }
-                .padding(.horizontal, 40)
-                .padding(.vertical)
-                .glassBackgroundEffect()
-                .padding(.horizontal, 40)
-                .transition(.scale)
+                .padding(.vertical, 20)
+                .padding()
+            }
+            
+            if areOptionsShowing {
+                
             }
             
             Text("This player only supports immersive and spatial videos in the MV-HEVC format. \(Image(systemName: "info.bubble\(isTooltipShowing ? "" : ".fill")"))")
                 .font(.callout)
                 .padding()
-                .contentShape(.rect)
+                .contentShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                .hoverEffect()
                 .onTapGesture {
                     isTooltipShowing.toggle()
                 }
@@ -86,7 +114,6 @@ struct StreamSources: View {
                         .padding(15)
                 }
         }
-        .padding()
     }
     
     /// Open the immersive player and play the video for the provided stream.
@@ -103,14 +130,40 @@ struct StreamSources: View {
         }
     }
     
-    /// Updates the input StreamModel's fallbackFieldOfView and forceFieldOfView values according to their corresponding user options.
+    /// Updates the input StreamModel's `projection` value according to the corresponding user options.
     /// - Parameters:
     ///   - stream: the model describing the stream.
     private func applyFormat(to stream: StreamModel) -> StreamModel {
         var stream = stream
-        stream.fallbackFieldOfView = Float(fallbackFov)
-        stream.forceFieldOfView = forceFov ? Float(fallbackFov) : nil
+        switch appState.projection {
+        case .equirectangular:
+            stream.projection = .equirectangular(fieldOfView: Float(appState.fieldOfView), force: appState.forceFov)
+        case .spatial:
+            stream.projection = .rectangular
+        case .appleImmersive:
+            stream.projection = .appleImmersive
+        }
         return stream
+    }
+}
+
+/// A projection type picker
+struct ProjectionPicker: View {
+    @Binding public var projection: ProjectionOption
+    public let options: [ProjectionOption]
+    
+    var body: some View {
+        Picker(selection: $projection.animation()) {
+            ForEach(options, id: \.self) { option in
+                Text(option.rawValue).tag(option)
+            }
+        } label: {
+            Text("Projection:")
+        }
+        .pickerStyle(.palette)
+        .controlSize(.large)
+        .frame(maxWidth: CGFloat(300 * options.count))
+        .fixedSize()
     }
 }
 
@@ -139,11 +192,12 @@ extension StreamModel {
         title: "Example Stream",
         details: "Local basketball player takes a shot at sunset",
         url: URL(string: "https://stream.spatialgen.com/stream/JNVc-sA-_QxdOQNnzlZTc/index.m3u8")!,
-        fallbackFieldOfView: 180.0,
+        projection: .equirectangular(fieldOfView: 180.0),
         isSecurityScoped: false
     )
 }
 
 #Preview(windowStyle: .automatic) {
     StreamSources()
+        .environment(OpenImmersiveAppState())
 }

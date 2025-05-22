@@ -15,8 +15,7 @@ struct MainMenu: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 255)
-                .padding(.horizontal, 40)
-                .padding(.vertical)
+                .padding(20)
             
             Text("OpenImmersive")
                 .font(.largeTitle)
@@ -24,8 +23,12 @@ struct MainMenu: View {
             Text("A free and open source immersive video player for the Apple Vision Pro.")
                 .font(.headline)
             
+            Spacer()
+            
             StreamSources()
-                .padding(.top, 40)
+                .padding(.vertical)
+            
+            Spacer()
             
             Text("OpenImmersive \(version) \nMaintained by [Anthony Maës](https://www.linkedin.com/in/portemantho/) & [Acute Immersive 🐶](https://www.acuteimmersive.com/)\nDerived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer/) by [Mike Swanson](https://blog.mikeswanson.com/)")
                 .contentShape(.rect)
