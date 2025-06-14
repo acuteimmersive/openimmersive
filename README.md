@@ -18,7 +18,7 @@ OpenImmersive aims to provide this community with a more complete player, with p
 * **This player only supports immersive and spatial videos in the MV-HEVC & AIVU formats.** Other formats will not display correctly without code modifications.
 * Load a video from various sources: photo gallery, local files/documents, streaming playlist URL.
 * Control playback with Play/Pause buttons, +15/-15 second buttons, and an interactable scrubber in an auto-dismiss control panel.
-* Select resolution/bandwidth when streaming videos.
+* Select resolution/bandwidth and audio track when streaming videos.
 * A timecode readout panel to illustrate injection of custom buttons & views in the ImmersivePlayer.
 
 ## Requirements
@@ -43,7 +43,13 @@ Or install the app from the [visionOS AppStore](https://apps.apple.com/us/app/op
 ## Contributions
 While this project aims to remain relatively concise and lightweight to allow for modifiability, it needs a few more basic features and better error handling. Contributions are greatly appreciated!
 
-Desired improvements:
+## Desired improvements:
+- Spatial audio support
 - Subtitles support
-- Online stream format detection
+- Improved Apple Immersive Video support
+- Online stream format detection, Apple Projected Media Profile support
 - Media drag & drop support
+- SharePlay support
+- Improved ControlPanel look and feel
+
+Special thanks to [Zachary Handshoe](https://www.linkedin.com/in/zachary-handshoe/) from [SpatialGen](https://spatialgen.com/) for his contributions.
