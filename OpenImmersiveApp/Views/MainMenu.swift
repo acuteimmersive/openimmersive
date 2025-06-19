@@ -49,4 +49,5 @@ struct MainMenu: View {
 
 #Preview(windowStyle: .automatic) {
     MainMenu()
+        .environment(OpenImmersiveAppState())
 }
