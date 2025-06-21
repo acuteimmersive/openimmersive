@@ -12,7 +12,6 @@ import OpenImmersive
 struct StreamSources: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
-    /// The selected projection type
     @Environment(OpenImmersiveAppState.self) private var appState
     
     /// The visibility of a panel with advanced format options
@@ -95,10 +94,6 @@ struct StreamSources: View {
                 .padding()
             }
             
-            if areOptionsShowing {
-                
-            }
-            
             Text("This player only supports immersive and spatial videos in the MV-HEVC format. \(Image(systemName: "info.bubble\(isTooltipShowing ? "" : ".fill")"))")
                 .font(.callout)
                 .padding()
@@ -108,9 +103,10 @@ struct StreamSources: View {
                     isTooltipShowing.toggle()
                 }
                 .popover(isPresented: $isTooltipShowing) {
-                    Text("To convert side-by-side and over-under videos to MV-HEVC, please use a tool like Andrew Hazelden's [Spatial Metadata app](https://github.com/Kartaverse/Spatial-Metadata) or Mike Swanson's [Spatial command line interface](https://blog.mikeswanson.com/spatial/). This last link also points to other tools, apps and services.")
+                    Text("To convert side-by-side and over-under videos to MV-HEVC, use a tool like Andrew Hazelden's [Spatial Metadata app](https://github.com/Kartaverse/Spatial-Metadata) or Mike Swanson's [Spatial command line interface](https://blog.mikeswanson.com/spatial/).\n\nTo further convert 180 degree MV-HEVC videos to AIVU, use the [Apple Immersive Video Utility](https://support.apple.com/guide/immersive-video-utility/welcome/web) and select \"HEQU\" when prompted for an AIME file.")
+                        .multilineTextAlignment(.center)
                         .contentShape(.rect)
-                        .frame(minHeight: 80)
+                        .frame(minHeight: 120)
                         .padding(15)
                 }
         }

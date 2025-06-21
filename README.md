@@ -16,10 +16,11 @@ OpenImmersive aims to provide this community with a more complete player, with p
 ## Features
 * The xcode project contains **OpenImmersiveApp**, the visionOS app, which depends on **OpenImmersiveLib**, an easy-to-integrate Swift package that lives on its own github repository: [https://github.com/acuteimmersive/openimmersivelib](https://github.com/acuteimmersive/openimmersivelib)
 * **This player only supports immersive and spatial videos in the MV-HEVC & AIVU formats.** Other formats will not display correctly without code modifications.
-* Load a video from various sources: photo gallery, local files/documents, streaming playlist URL.
+* Load a video from various sources: photo gallery, local files/documents, streaming playlist URL, or by dragging a video onto the window.
 * Control playback with Play/Pause buttons, +15/-15 second buttons, and an interactable scrubber in an auto-dismiss control panel.
 * Select resolution/bandwidth and audio track when streaming videos.
 * A timecode readout panel to illustrate injection of custom buttons & views in the ImmersivePlayer.
+* Play in AIVU mode with full spatial audio support!
 
 ## Requirements
 * macOS with Xcode 16 or later
@@ -44,11 +45,9 @@ Or install the app from the [visionOS AppStore](https://apps.apple.com/us/app/op
 While this project aims to remain relatively concise and lightweight to allow for modifiability, it needs a few more basic features and better error handling. Contributions are greatly appreciated!
 
 ## Desired improvements:
-- Spatial audio support
 - Subtitles support
-- Improved Apple Immersive Video support
+- Improved Spatial Audio support
 - Online stream format detection, Apple Projected Media Profile support
-- Media drag & drop support
 - SharePlay support
 - Improved ControlPanel look and feel
 

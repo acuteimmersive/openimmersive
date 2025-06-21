@@ -39,7 +39,11 @@ struct OpenImmersiveApp: App {
     
     var body: some Scene {
         WindowGroup(id: "MainWindow") {
-            MainMenu()
+            DropTarget() {
+                MainMenu()
+            } loadStreamAction: { stream in
+                appState.selectedStream = stream
+            }
         }
         .defaultSize(width: 800, height: 850)
         .environment(appState)
