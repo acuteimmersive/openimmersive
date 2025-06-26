@@ -371,7 +371,7 @@
 			repositoryURL = "https://github.com/acuteimmersive/openimmersivelib";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.4.4;
+				minimumVersion = 1.4.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
