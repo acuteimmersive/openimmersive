@@ -39,14 +39,17 @@ struct StreamSources: View {
             
             HStack {
                 SpatialVideoPicker() { stream in
+                    applyFormat(from: stream)
                     appState.selectedStream = stream
                 }
                 
                 FilePicker() { stream in
+                    applyFormat(from: stream)
                     appState.selectedStream = stream
                 }
                 
                 StreamUrlInput() { stream in
+                    applyFormat(from: stream)
                     appState.selectedStream = stream
                 }
                 
@@ -140,6 +143,24 @@ struct StreamSources: View {
             stream.projection = .appleImmersive
         }
         return stream
+    }
+    
+    /// Updates user options according to the input StreamModel's `projection` value.
+    /// - Parameters:
+    ///   - stream: the model describing the stream.
+    private func applyFormat(from stream: StreamModel) {
+        if let projection = stream.projection {
+            switch projection {
+            case .equirectangular(fieldOfView: let fieldOfView, force: let force):
+                appState.projection = .equirectangular
+                appState.fieldOfView = Int(fieldOfView)
+                appState.forceFov = force
+            case .rectangular:
+                appState.projection = .spatial
+            case .appleImmersive:
+                appState.projection = .appleImmersive
+            }
+        }
     }
 }
 

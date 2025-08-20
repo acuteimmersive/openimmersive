@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/acuteimmersive/openimmersivelib",
       "state" : {
-        "revision" : "c9ea96fd1bd751694d8d39b115c4ce1dc38b07fe",
-        "version" : "1.4.5"
+        "revision" : "16b5b8fd16b680b0dc9374be92dd8961ea0b8179",
+        "version" : "1.4.6"
       }
     }
   ],
