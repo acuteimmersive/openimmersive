@@ -22,10 +22,13 @@ struct StreamSources: View {
     var body: some View {
         @Bindable var appState = appState
         VStack(spacing: 10) {
-            let selectedStream = appState.selectedStream ?? StreamModel.sampleStream
+            let selectedStream = {
+                let stream = appState.selectedStream ?? StreamModel.sampleStream
+                return appState.applyFormatOptions(to: stream)
+            }()
             
             PlayButton() {
-                playVideo(applyFormat(to: selectedStream))
+                playVideo(selectedStream)
             }
             
             let videoTitle = selectedStream.title
@@ -39,17 +42,17 @@ struct StreamSources: View {
             
             HStack {
                 SpatialVideoPicker() { stream in
-                    applyFormat(from: stream)
+                    appState.applyFormatOptions(from: stream)
                     appState.selectedStream = stream
                 }
                 
                 FilePicker() { stream in
-                    applyFormat(from: stream)
+                    appState.applyFormatOptions(from: stream)
                     appState.selectedStream = stream
                 }
                 
                 StreamUrlInput() { stream in
-                    applyFormat(from: stream)
+                    appState.applyFormatOptions(from: stream)
                     appState.selectedStream = stream
                 }
                 
@@ -129,39 +132,6 @@ struct StreamSources: View {
         }
     }
     
-    /// Updates the input StreamModel's `projection` value according to the corresponding user options.
-    /// - Parameters:
-    ///   - stream: the model describing the stream.
-    private func applyFormat(to stream: StreamModel) -> StreamModel {
-        var stream = stream
-        switch appState.projection {
-        case .equirectangular:
-            stream.projection = .equirectangular(fieldOfView: Float(appState.fieldOfView), force: appState.forceFov)
-        case .spatial:
-            stream.projection = .rectangular
-        case .appleImmersive:
-            stream.projection = .appleImmersive
-        }
-        return stream
-    }
-    
-    /// Updates user options according to the input StreamModel's `projection` value.
-    /// - Parameters:
-    ///   - stream: the model describing the stream.
-    private func applyFormat(from stream: StreamModel) {
-        if let projection = stream.projection {
-            switch projection {
-            case .equirectangular(fieldOfView: let fieldOfView, force: let force):
-                appState.projection = .equirectangular
-                appState.fieldOfView = Int(fieldOfView)
-                appState.forceFov = force
-            case .rectangular:
-                appState.projection = .spatial
-            case .appleImmersive:
-                appState.projection = .appleImmersive
-            }
-        }
-    }
 }
 
 /// A projection type picker

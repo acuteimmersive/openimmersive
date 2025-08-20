@@ -29,6 +29,40 @@ class OpenImmersiveAppState {
     var forceFov: Bool = false
     /// Whether to show the timecode readout view in the ImmersivePlayer.
     var showTimecodeReadout: Bool = false
+    
+    /// Updates the input StreamModel's `projection` value according to the corresponding user options.
+    /// - Parameters:
+    ///   - stream: the model describing the stream.
+    func applyFormatOptions(to stream: StreamModel) -> StreamModel {
+        var stream = stream
+        switch projection {
+        case .equirectangular:
+            stream.projection = .equirectangular(fieldOfView: Float(self.fieldOfView), force: self.forceFov)
+        case .spatial:
+            stream.projection = .rectangular
+        case .appleImmersive:
+            stream.projection = .appleImmersive
+        }
+        return stream
+    }
+    
+    /// Updates user options according to the input StreamModel's `projection` value.
+    /// - Parameters:
+    ///   - stream: the model describing the stream.
+    func applyFormatOptions(from stream: StreamModel) {
+        if let projection = stream.projection {
+            switch projection {
+            case .equirectangular(fieldOfView: let fieldOfView, force: let force):
+                self.projection = .equirectangular
+                self.fieldOfView = Int(fieldOfView)
+                self.forceFov = force
+            case .rectangular:
+                self.projection = .spatial
+            case .appleImmersive:
+                self.projection = .appleImmersive
+            }
+        }
+    }
 }
 
 @main
@@ -42,6 +76,7 @@ struct OpenImmersiveApp: App {
             DropTarget() {
                 MainMenu()
             } loadStreamAction: { stream in
+                appState.applyFormatOptions(from: stream)
                 appState.selectedStream = stream
             }
         }

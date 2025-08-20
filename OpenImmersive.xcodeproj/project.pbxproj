@@ -169,7 +169,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4.6;
+				CURRENT_PROJECT_VERSION = 1.4.7;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 687UMFX665;
 				ENABLE_PREVIEWS = YES;
@@ -182,7 +182,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.6;
+				MARKETING_VERSION = 1.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acuteimmersive.openimmersive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -198,7 +198,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4.6;
+				CURRENT_PROJECT_VERSION = 1.4.7;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 687UMFX665;
 				ENABLE_PREVIEWS = YES;
@@ -211,7 +211,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.6;
+				MARKETING_VERSION = 1.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.acuteimmersive.openimmersive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -371,7 +371,7 @@
 			repositoryURL = "https://github.com/acuteimmersive/openimmersivelib";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.4.6;
+				minimumVersion = 1.4.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
