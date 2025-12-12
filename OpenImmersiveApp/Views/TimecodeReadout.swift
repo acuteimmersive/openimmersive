@@ -47,10 +47,13 @@ struct TimecodeToggle: View {
     @Binding var isOn: Bool
     
     var body: some View {
-        Toggle("", systemImage: "timer.square", isOn: $isOn)
-            .toggleStyle(.button)
-            .controlSize(.extraLarge)
-            .tint(.clear)
+        Toggle(isOn: $isOn) {
+            Image(systemName: "timer.square")
+        }
+        .toggleStyle(.button)
+        .buttonBorderShape(.circle)
+        .controlSize(.large)
+        .tint(.clear)
     }
 }
 

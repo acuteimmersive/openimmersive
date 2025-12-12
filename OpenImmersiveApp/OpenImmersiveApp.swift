@@ -19,8 +19,8 @@ enum ProjectionOption: String {
 
 @Observable
 class OpenImmersiveAppState {
-    /// The user-selected stream.
-    var selectedStream: StreamModel?
+    /// The user-selected item.
+    var selectedItem: VideoItem?
     /// The user-selected projection for the video.
     var projection: ProjectionOption = .equirectangular
     /// The user-selected field of view in case it cannot be extracted from the video asset (equirectangular projection only).
@@ -30,27 +30,27 @@ class OpenImmersiveAppState {
     /// Whether to show the timecode readout view in the ImmersivePlayer.
     var showTimecodeReadout: Bool = false
     
-    /// Updates the input StreamModel's `projection` value according to the corresponding user options.
+    /// Updates the input VideoItem's `projection` value according to the corresponding user options.
     /// - Parameters:
-    ///   - stream: the model describing the stream.
-    func applyFormatOptions(to stream: StreamModel) -> StreamModel {
-        var stream = stream
+    ///   - item: the object describing the video.
+    func applyFormatOptions(to item: VideoItem) -> VideoItem {
+        var item = item
         switch projection {
         case .equirectangular:
-            stream.projection = .equirectangular(fieldOfView: Float(self.fieldOfView), force: self.forceFov)
+            item.projection = .equirectangular(fieldOfView: Float(self.fieldOfView), force: self.forceFov)
         case .spatial:
-            stream.projection = .rectangular
+            item.projection = .rectangular
         case .appleImmersive:
-            stream.projection = .appleImmersive
+            item.projection = .appleImmersive
         }
-        return stream
+        return item
     }
     
-    /// Updates user options according to the input StreamModel's `projection` value.
+    /// Updates user options according to the input VideoItem's `projection` value.
     /// - Parameters:
-    ///   - stream: the model describing the stream.
-    func applyFormatOptions(from stream: StreamModel) {
-        if let projection = stream.projection {
+    ///   - item: the object describing the video.
+    func applyFormatOptions(from item: VideoItem) {
+        if let projection = item.projection {
             switch projection {
             case .equirectangular(fieldOfView: let fieldOfView, force: let force):
                 self.projection = .equirectangular
@@ -75,15 +75,15 @@ struct OpenImmersiveApp: App {
         WindowGroup(id: "MainWindow") {
             DropTarget() {
                 MainMenu()
-            } loadStreamAction: { stream in
-                appState.applyFormatOptions(from: stream)
-                appState.selectedStream = stream
+            } loadItemAction: { item in
+                appState.applyFormatOptions(from: item)
+                appState.selectedItem = item
             }
         }
         .defaultSize(width: 800, height: 850)
         .environment(appState)
         
-        ImmersiveSpace(for: StreamModel.self) { $model in
+        ImmersiveSpace(for: VideoItem.self) { $model in
             let closeAction: CustomAction = {
                 Task {
                     openWindow(id: "MainWindow")
@@ -107,7 +107,7 @@ struct OpenImmersiveApp: App {
             )
             
             ImmersivePlayer(
-                selectedStream: model!,
+                selectedItem: model!,
                 closeAction: closeAction,
                 customButtons: customButton,
                 customAttachments: [customAttachment]

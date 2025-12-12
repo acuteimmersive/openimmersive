@@ -11,12 +11,12 @@ The Apple Vision Pro introduced two types of stereoscopic videos:
 
 Because of significant interest in filmmakers for Immersive Video (fka. 3D VR180), many developers have built their own players, often derived from Mike's open-source Spatial Player.
 
-OpenImmersive aims to provide this community with a more complete player, with playback controls, error handling, media loading from streaming and from the local photo gallery. The project and code are intentionally kept as concise as possible to find the right balance between turnkey readiness and modifiability.
+OpenImmersive aims to provide this community with a more complete player, with playback controls, error handling, media loading from HLS streaming and from the local photo gallery. The project and code are intentionally kept as concise as possible to find the right balance between turnkey readiness and modifiability.
 
 ## Features
 * The xcode project contains **OpenImmersiveApp**, the visionOS app, which depends on **OpenImmersiveLib**, an easy-to-integrate Swift package that lives on its own github repository: [https://github.com/acuteimmersive/openimmersivelib](https://github.com/acuteimmersive/openimmersivelib)
 * **This player only supports immersive and spatial videos in the MV-HEVC & AIVU formats.** Other formats will not display correctly without code modifications.
-* Load a video from various sources: photo gallery, local files/documents, streaming playlist URL, or by dragging a video onto the window.
+* Load a video from various sources: photo gallery, local files/documents, HLS streaming playlist URL, or by dragging a video onto the window.
 * Control playback with Play/Pause buttons, +15/-15 second buttons, and an interactable scrubber in an auto-dismiss control panel.
 * Select resolution/bandwidth and audio track when streaming videos.
 * A timecode readout panel to illustrate injection of custom buttons & views in the ImmersivePlayer.

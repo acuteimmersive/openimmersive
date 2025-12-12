@@ -1,5 +1,5 @@
 //
-//  StreamSources.swift
+//  SourcesList.swift
 //  OpenImmersiveApp
 //
 //  Created by Anthony Maës (Acute Immersive) on 9/20/24.
@@ -8,8 +8,8 @@
 import SwiftUI
 import OpenImmersive
 
-/// A list of available video stream sources.
-struct StreamSources: View {
+/// A list of available video item sources.
+struct SourcesList: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(OpenImmersiveAppState.self) private var appState
@@ -22,16 +22,16 @@ struct StreamSources: View {
     var body: some View {
         @Bindable var appState = appState
         VStack(spacing: 10) {
-            let selectedStream = {
-                let stream = appState.selectedStream ?? StreamModel.sampleStream
-                return appState.applyFormatOptions(to: stream)
+            let selectedItem = {
+                let item = appState.selectedItem ?? VideoItem.sampleHLSStream
+                return appState.applyFormatOptions(to: item)
             }()
             
             PlayButton() {
-                playVideo(selectedStream)
+                playVideo(selectedItem)
             }
             
-            let videoTitle = selectedStream.title
+            let videoTitle = selectedItem.metadata[.commonIdentifierTitle] ?? "<NONE>"
             let fieldOfView = appState.projection == .equirectangular ? "\(appState.fieldOfView)°" : ""
             
             Text("Selected video: **\(videoTitle)**")
@@ -41,25 +41,26 @@ struct StreamSources: View {
                 .padding(.vertical)
             
             HStack {
-                SpatialVideoPicker() { stream in
-                    appState.applyFormatOptions(from: stream)
-                    appState.selectedStream = stream
+                SpatialVideoPicker() { item in
+                    appState.applyFormatOptions(from: item)
+                    appState.selectedItem = item
                 }
                 
-                FilePicker() { stream in
-                    appState.applyFormatOptions(from: stream)
-                    appState.selectedStream = stream
+                FilePicker() { item in
+                    appState.applyFormatOptions(from: item)
+                    appState.selectedItem = item
                 }
                 
-                StreamUrlInput() { stream in
-                    appState.applyFormatOptions(from: stream)
-                    appState.selectedStream = stream
+                StreamUrlInput() { item in
+                    appState.applyFormatOptions(from: item)
+                    appState.selectedItem = item
                 }
                 
                 Toggle(isOn: $areOptionsShowing.animation(.interactiveSpring)) {
                     Image(systemName: "gearshape.fill")
                 }
                 .toggleStyle(.button)
+                .buttonBorderShape(.circle)
             }
             .popover(isPresented: $areOptionsShowing) {
                 VStack {
@@ -83,7 +84,7 @@ struct StreamSources: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.center)
                     case .appleImmersive:
-                        Text("**Experimental!**\nThe video will render with the native player for Apple Immersive Videos.\nAIVU files created from half-equirectangular videos in the Apple Immersive Video Utility should use the Equirectangular projection.")
+                        Text("The video will render with the native player for Apple Immersive Videos.\nAIVU files created from half-equirectangular videos in the Apple Immersive Video Utility should use the Equirectangular projection.")
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.center)
                     }
@@ -118,14 +119,14 @@ struct StreamSources: View {
         }
     }
     
-    /// Open the immersive player and play the video for the provided stream.
+    /// Open the immersive player and play the video for the provided item.
     /// - Parameters:
-    ///   - stream: the model describing the stream.
+    ///   - item: the object describing the video.
     ///
-    /// Opening the immersive player will close the current window containing the StreamSources view.
-    func playVideo(_ stream: StreamModel) {
+    /// Opening the immersive player will close the current window containing the SourcesList view.
+    func playVideo(_ item: VideoItem) {
         Task {
-            let result = await openImmersiveSpace(value: stream)
+            let result = await openImmersiveSpace(value: item)
             if result == .opened {
                 dismissWindow()
             }
@@ -173,17 +174,19 @@ struct FormatPicker: View {
     }
 }
 
-extension StreamModel {
-    /// An example StreamModel to illustrate how to load videos that stream from the web.
-    @MainActor public static let sampleStream = StreamModel(
-        title: "Example Stream",
-        details: "Local basketball player takes a shot at sunset",
+extension VideoItem {
+    /// An example VideoItem to illustrate how to load HLS stream videos from the web.
+    @MainActor public static let sampleHLSStream = VideoItem(
+        metadata: [
+            .commonIdentifierTitle: "Example Stream",
+            .commonIdentifierDescription: "Local basketball player takes a shot at sunset",
+        ],
         url: URL(string: "https://stream.spatialgen.com/stream/JNVc-sA-_QxdOQNnzlZTc/index.m3u8")!,
         projection: .equirectangular(fieldOfView: 180.0)
     )
 }
 
 #Preview(windowStyle: .automatic) {
-    StreamSources()
+    SourcesList()
         .environment(OpenImmersiveAppState())
 }

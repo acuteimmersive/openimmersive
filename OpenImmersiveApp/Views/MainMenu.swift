@@ -25,7 +25,7 @@ struct MainMenu: View {
             
             Spacer()
             
-            StreamSources()
+            SourcesList()
                 .padding(.vertical)
             
             Spacer()
