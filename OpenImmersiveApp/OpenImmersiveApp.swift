@@ -96,7 +96,7 @@ struct OpenImmersiveApp: App {
             let customButton: CustomViewBuilder = { _ in
                 TimecodeToggle(isOn: $appState.showTimecodeReadout)
             }
-            let customAttachment = CustomAttachment(
+            let timecodeAttachment = CustomAttachment(
                 id: "TimecodeReadout",
                 body: { $videoPlayer in
                     TimecodeReadout(videoPlayer: videoPlayer, visible: $appState.showTimecodeReadout)
@@ -110,7 +110,7 @@ struct OpenImmersiveApp: App {
                 selectedItem: model!,
                 closeAction: closeAction,
                 customButtons: customButton,
-                customAttachments: [customAttachment]
+                customAttachments: [timecodeAttachment],
             )
         }
         .immersionStyle(selection: .constant(.full), in: .full)

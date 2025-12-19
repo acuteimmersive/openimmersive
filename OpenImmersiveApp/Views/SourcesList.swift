@@ -182,7 +182,8 @@ extension VideoItem {
             .commonIdentifierDescription: "Local basketball player takes a shot at sunset",
         ],
         url: URL(string: "https://stream.spatialgen.com/stream/JNVc-sA-_QxdOQNnzlZTc/index.m3u8")!,
-        projection: .equirectangular(fieldOfView: 180.0)
+        projection: .equirectangular(fieldOfView: 180.0),
+        subtitleURL: Bundle.main.url(forResource: "sample_subtitles", withExtension: "vtt", subdirectory: "TestAssets")
     )
 }
 

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:03,000
+Welcome to the immersive video experience
+
+2
+00:00:03,500 --> 00:00:07,000
+This is a sample subtitle file
+
+3
+00:00:07,500 --> 00:00:11,000
+Testing the caption display system
+
+4
+00:00:11,500 --> 00:00:15,000
+Subtitles appear at the bottom of your view
+
+5
+00:00:15,500 --> 00:00:19,000
+Tap the CC button to load subtitle files
+
+6
+00:00:19,500 --> 00:00:23,000
+Supports SRT, WebVTT, and other formats
+
+7
+00:00:23,500 --> 00:00:27,000
+Enjoy your immersive video!
