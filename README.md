@@ -46,5 +46,5 @@ While this project aims to remain relatively concise and lightweight to allow fo
 - Format auto detection from HLS manifest
 - SharePlay support
 
-Special thanks to [Zachary Handshoe](https://www.linkedin.com/in/zachary-handshoe/) from [SpatialGen](https://spatialgen.com/) for his contributions.
+Special thanks to [Zachary Handshoe](https://www.linkedin.com/in/zachary-handshoe/) from [SpatialGen](https://spatialgen.com/) & [Raphael Dobers](https://github.com/rdotrifork) for their contributions.
 Special thanks to [SINTEF](https://www.sintef.no/) and [Gassco](https://gassco.eu/) for supporting development.
